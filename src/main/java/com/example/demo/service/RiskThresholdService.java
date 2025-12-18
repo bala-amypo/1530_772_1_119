@@ -7,4 +7,5 @@ public interface RiskThresholdService {
     RiskThreshold createThreshold(RiskThreshold threshold);
 
     RiskThreshold getThresholdById(Long id);
+    
 }
