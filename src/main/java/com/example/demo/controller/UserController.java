@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
@@ -9,24 +9,24 @@ import com.example.demo.service.UserService;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService service;
+    private final UserService userService;
 
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping
-    public User add(@RequestBody User user) {
-        return service.createUser(user);
+    public User register(@RequestBody User user) {
+        return userService.registerUser(user);
     }
 
     @GetMapping("/{id}")
-    public User get(@PathVariable Long id) {
-        return service.getUserById(id);
+    public User getById(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
-    @GetMapping
-    public List<User> getAll() {
-        return service.getAllUsers();
+    @GetMapping("/email/{email}")
+    public User getByEmail(@PathVariable String email) {
+        return userService.findByEmail(email);
     }
 }
