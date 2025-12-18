@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "portfolio_holdings")
 public class PortfolioHolding {
 
     @Id
@@ -21,5 +22,20 @@ public class PortfolioHolding {
 
     public PortfolioHolding() {}
 
-    // getters and setters
+    public PortfolioHolding(UserPortfolio portfolio, Stock stock,
+                            Double quantity, BigDecimal marketValue) {
+        this.portfolio = portfolio;
+        this.stock = stock;
+        this.quantity = quantity;
+        this.marketValue = marketValue;
+    }
+
+    // getters & setters
+    public Long getId() { return id; }
+    public UserPortfolio getPortfolio() { return portfolio; }
+    public Stock getStock() { return stock; }
+    public Double getQuantity() { return quantity; }
+    public void setQuantity(Double quantity) { this.quantity = quantity; }
+    public BigDecimal getMarketValue() { return marketValue; }
+    public void setMarketValue(BigDecimal marketValue) { this.marketValue = marketValue; }
 }
