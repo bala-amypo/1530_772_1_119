@@ -37,7 +37,6 @@ public class UserPortfolio {
         this.createdAt = LocalDateTime.now();
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
