@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.RiskThreshold;
@@ -20,8 +22,24 @@ public class RiskThresholdController {
         return thresholdService.createThreshold(threshold);
     }
 
+    @PutMapping("/{id}")
+    public RiskThreshold update(@PathVariable Long id,
+                                @RequestBody RiskThreshold threshold) {
+        return thresholdService.updateThreshold(id, threshold);
+    }
+
+    @GetMapping("/active")
+    public RiskThreshold getActive() {
+        return thresholdService.getActiveThreshold();
+    }
+
     @GetMapping("/{id}")
     public RiskThreshold getById(@PathVariable Long id) {
         return thresholdService.getThresholdById(id);
+    }
+
+    @GetMapping
+    public List<RiskThreshold> getAll() {
+        return thresholdService.getAllThresholds();
     }
 }
