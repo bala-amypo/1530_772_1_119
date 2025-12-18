@@ -30,7 +30,6 @@ public class Stock {
         this.isActive = isActive;
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public String getTicker() { return ticker; }
     public void setTicker(String ticker) { this.ticker = ticker; }

@@ -26,7 +26,6 @@ public class RiskThreshold {
         this.maxOverallVolatility = maxOverallVolatility;
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public UserPortfolio getPortfolio() { return portfolio; }
     public Double getMaxSingleStockPercentage() { return maxSingleStockPercentage; }

@@ -30,7 +30,6 @@ public class PortfolioHolding {
         this.marketValue = marketValue;
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public UserPortfolio getPortfolio() { return portfolio; }
     public Stock getStock() { return stock; }

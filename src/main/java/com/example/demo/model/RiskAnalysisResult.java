@@ -35,7 +35,6 @@ public class RiskAnalysisResult {
         this.analysisDate = LocalDateTime.now();
     }
 
-    // getters & setters
     public Long getId() { return id; }
     public UserPortfolio getPortfolio() { return portfolio; }
     public LocalDateTime getAnalysisDate() { return analysisDate; }
