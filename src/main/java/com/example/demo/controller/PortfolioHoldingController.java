@@ -38,4 +38,8 @@ public class PortfolioHoldingController {
             @PathVariable Long portfolioId) {
         return holdingService.getHoldingsByPortfolio(portfolioId);
     }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+    holdingService.deleteHolding(id);
+    }
 }
