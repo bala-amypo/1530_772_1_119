@@ -9,23 +9,27 @@ import com.example.demo.service.RiskAnalysisResultService;
 
 @RestController
 @RequestMapping("/api/risk-analysis")
-public class RiskAnalysisResultController {
+public class RiskAnalysisController {
 
     private final RiskAnalysisResultService analysisService;
 
-    public RiskAnalysisResultController(
-            RiskAnalysisResultService analysisService) {
+    public RiskAnalysisController(RiskAnalysisResultService analysisService) {
         this.analysisService = analysisService;
     }
 
-    @PostMapping
-    public RiskAnalysisResult save(@RequestBody RiskAnalysisResult result) {
-        return analysisService.save(result);
+    @PostMapping("/analyze/{portfolioId}")
+    public RiskAnalysisResult analyze(@PathVariable Long portfolioId) {
+        return analysisService.analyzePortfolio(portfolioId);
+    }
+
+    @GetMapping("/{id}")
+    public RiskAnalysisResult getById(@PathVariable Long id) {
+        return analysisService.getAnalysisById(id);
     }
 
     @GetMapping("/portfolio/{portfolioId}")
     public List<RiskAnalysisResult> getByPortfolio(
             @PathVariable Long portfolioId) {
-        return analysisService.getByPortfolio(portfolioId);
+        return analysisService.getAnalysesForPortfolio(portfolioId);
     }
 }
