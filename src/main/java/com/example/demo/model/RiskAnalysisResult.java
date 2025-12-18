@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "risk_analysis_results")
 public class RiskAnalysisResult {
 
     @Id
@@ -13,12 +14,30 @@ public class RiskAnalysisResult {
     @ManyToOne
     private UserPortfolio portfolio;
 
-    private Double highestStockPercentage;
-    private Double highestSectorPercentage;
-    private Boolean isHighRisk;
     private LocalDateTime analysisDate;
+    private Double highestStockPercentage;
+    private Boolean isHighRisk;
 
     public RiskAnalysisResult() {}
 
-    // getters and setters
+    public RiskAnalysisResult(UserPortfolio portfolio,
+                              LocalDateTime analysisDate,
+                              Double highestStockPercentage,
+                              Boolean isHighRisk) {
+        this.portfolio = portfolio;
+        this.analysisDate = analysisDate;
+        this.highestStockPercentage = highestStockPercentage;
+        this.isHighRisk = isHighRisk;
+    }
+
+    @PrePersist
+    public void onCreate() {
+        this.analysisDate = LocalDateTime.now();
+    }
+
+    // getters & setters
+    public Long getId() { return id; }
+    public UserPortfolio getPortfolio() { return portfolio; }
+    public LocalDateTime getAnalysisDate() { return analysisDate; }
+    public Boolean getIsHighRisk() { return isHighRisk; }
 }
