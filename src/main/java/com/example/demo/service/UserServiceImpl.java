@@ -1,37 +1,45 @@
 package com.example.demo.service;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
+
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repo;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository repo) {
-        this.repo = repo;
+    // ✅ NO PasswordEncoder, NO security
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
-    public User createUser(User user) {
+    public User registerUser(User user) {
 
-        if (repo.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Duplicate email");
         }
 
-        return repo.save(user);
+        // default role
+        if (user.getRole() == null) {
+            user.setRole("MONITOR");
+        }
+
+        // password stored as plain string (NO hashing as requested)
+        return userRepository.save(user);
     }
 
     @Override
-    public User getUserById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found"));
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return repo.findAll();
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
