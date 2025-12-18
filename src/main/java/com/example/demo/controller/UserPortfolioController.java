@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.model.UserPortfolio;
 import com.example.demo.service.UserPortfolioService;
 
@@ -9,29 +11,30 @@ import com.example.demo.service.UserPortfolioService;
 @RequestMapping("/api/portfolios")
 public class UserPortfolioController {
 
-    private final UserPortfolioService service;
+    private final UserPortfolioService portfolioService;
 
-    public UserPortfolioController(UserPortfolioService service) {
-        this.service = service;
+    public UserPortfolioController(UserPortfolioService portfolioService) {
+        this.portfolioService = portfolioService;
     }
 
     @PostMapping
-    public UserPortfolio add(@RequestBody UserPortfolio p) {
-        return service.createPortfolio(p);
+    public UserPortfolio create(@RequestBody UserPortfolio portfolio) {
+        return portfolioService.createPortfolio(portfolio);
+    }
+
+    @PutMapping("/{id}")
+    public UserPortfolio update(@PathVariable Long id,
+                                @RequestBody UserPortfolio portfolio) {
+        return portfolioService.updatePortfolio(id, portfolio);
     }
 
     @GetMapping("/{id}")
-    public UserPortfolio get(@PathVariable Long id) {
-        return service.getPortfolioById(id);
+    public UserPortfolio getById(@PathVariable Long id) {
+        return portfolioService.getPortfolioById(id);
     }
 
     @GetMapping("/user/{userId}")
-    public List<UserPortfolio> byUser(@PathVariable Long userId) {
-        return service.getPortfoliosByUser(userId);
-    }
-
-    @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
-        service.deactivatePortfolio(id);
+    public List<UserPortfolio> getByUser(@PathVariable Long userId) {
+        return portfolioService.getPortfoliosByUser(userId);
     }
 }
