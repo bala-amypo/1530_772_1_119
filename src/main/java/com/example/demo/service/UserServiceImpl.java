@@ -10,7 +10,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    // ✅ NO PasswordEncoder, NO security
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -22,12 +21,10 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Duplicate email");
         }
 
-        // default role
         if (user.getRole() == null) {
             user.setRole("MONITOR");
         }
 
-        // password stored as plain string (NO hashing as requested)
         return userRepository.save(user);
     }
 
