@@ -6,27 +6,22 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
 @RestController
-@RequestMapping("/api/users")
-public class UserController {
+@RequestMapping("/auth")
+public class AuthController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public AuthController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public User register(@RequestBody User user) {
         return userService.registerUser(user);
     }
 
-    @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
-        return userService.findById(id);
-    }
-
-    @GetMapping("/email/{email}")
-    public User getByEmail(@PathVariable String email) {
-        return userService.findByEmail(email);
+    @PostMapping("/login")
+    public User login(@RequestBody User user) {
+        return userService.findByEmail(user.getEmail());
     }
 }
