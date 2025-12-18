@@ -5,6 +5,11 @@ import com.example.demo.model.PortfolioHolding;
 
 public interface PortfolioHoldingService {
 
-    PortfolioHolding createHolding(PortfolioHolding h);
-    List<PortfolioHolding> getByPortfolio(Long portfolioId);
+    PortfolioHolding createHolding(PortfolioHolding holding);
+
+    PortfolioHolding updateHolding(Long id, PortfolioHolding holding);
+
+    PortfolioHolding getHoldingById(Long id);
+
+    List<PortfolioHolding> getHoldingsByPortfolio(Long portfolioId);
 }
