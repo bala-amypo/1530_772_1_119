@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.model.RiskAnalysisResult;
 import com.example.demo.service.RiskAnalysisResultService;
 
@@ -9,19 +11,21 @@ import com.example.demo.service.RiskAnalysisResultService;
 @RequestMapping("/api/risk-analysis")
 public class RiskAnalysisResultController {
 
-    private final RiskAnalysisResultService service;
+    private final RiskAnalysisResultService analysisService;
 
-    public RiskAnalysisResultController(RiskAnalysisResultService service) {
-        this.service = service;
+    public RiskAnalysisResultController(
+            RiskAnalysisResultService analysisService) {
+        this.analysisService = analysisService;
     }
 
     @PostMapping
-    public RiskAnalysisResult add(@RequestBody RiskAnalysisResult r) {
-        return service.save(r);
+    public RiskAnalysisResult save(@RequestBody RiskAnalysisResult result) {
+        return analysisService.save(result);
     }
 
-    @GetMapping("/portfolio/{id}")
-    public List<RiskAnalysisResult> get(@PathVariable Long id) {
-        return service.getByPortfolio(id);
+    @GetMapping("/portfolio/{portfolioId}")
+    public List<RiskAnalysisResult> getByPortfolio(
+            @PathVariable Long portfolioId) {
+        return analysisService.getByPortfolio(portfolioId);
     }
 }
