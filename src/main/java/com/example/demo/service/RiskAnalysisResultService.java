@@ -5,7 +5,10 @@ import com.example.demo.model.RiskAnalysisResult;
 
 public interface RiskAnalysisResultService {
 
-    RiskAnalysisResult save(RiskAnalysisResult result);
+    RiskAnalysisResult analyzePortfolio(Long portfolioId);
 
-    List<RiskAnalysisResult> getByPortfolio(Long portfolioId);
+    RiskAnalysisResult getAnalysisById(Long id);
+
+    List<RiskAnalysisResult> getAnalysesForPortfolio(Long portfolioId);
+
 }
