@@ -18,7 +18,7 @@ public class StockController {
     }
 
     @PostMapping
-    public Stock add(@RequestBody Stock stock) {
+    public Stock create(@RequestBody Stock stock) {
         return stockService.createStock(stock);
     }
 
@@ -33,7 +33,7 @@ public class StockController {
     }
 
     @GetMapping
-    public List<Stock> show() {
+    public List<Stock> getAll() {
         return stockService.getAllStocks();
     }
 
