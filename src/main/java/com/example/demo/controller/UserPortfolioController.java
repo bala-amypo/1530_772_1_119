@@ -22,11 +22,11 @@ public class UserPortfolioController {
         return portfolioService.createPortfolio(portfolio);
     }
 
-    @PutMapping("/{id}")
-    public UserPortfolio update(@PathVariable Long id,
-                                @RequestBody UserPortfolio portfolio) {
-        return portfolioService.updatePortfolio(id, portfolio);
-    }
+       @PutMapping("/{id}")
+public UserPortfolio update(@PathVariable Long id,
+                            @RequestBody UserPortfolio portfolio) {
+    return portfolioService.updatePortfolio(id, portfolio);
+}
 
     @GetMapping("/{id}")
     public UserPortfolio getById(@PathVariable Long id) {
@@ -37,10 +37,6 @@ public class UserPortfolioController {
     public List<UserPortfolio> getByUser(@PathVariable Long userId) {
         return portfolioService.getPortfoliosByUser(userId);
     }
-   @PutMapping("/{id}")
-public UserPortfolio update(@PathVariable Long id,
-                            @RequestBody UserPortfolio portfolio) {
-    return portfolioService.updatePortfolio(id, portfolio);
-}
+
 
 }
