@@ -19,7 +19,6 @@ public class RiskThreshold {
 
     public RiskThreshold() {}
 
-    // ✅ GETTERS & SETTERS
     public Long getId() {
         return id;
     }
