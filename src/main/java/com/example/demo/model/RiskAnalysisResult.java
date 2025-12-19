@@ -1,10 +1,10 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+
 @Entity
-@Table(name = "risk_analysis_results")
 public class RiskAnalysisResult {
 
     @Id
@@ -15,28 +15,56 @@ public class RiskAnalysisResult {
     private UserPortfolio portfolio;
 
     private LocalDateTime analysisDate;
+
     private Double highestStockPercentage;
+
     private Boolean isHighRisk;
+
+    private String notes;
 
     public RiskAnalysisResult() {}
 
-    public RiskAnalysisResult(UserPortfolio portfolio,
-                              LocalDateTime analysisDate,
-                              Double highestStockPercentage,
-                              Boolean isHighRisk) {
+    public Long getId() {
+        return id;
+    }
+
+    public UserPortfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(UserPortfolio portfolio) {
         this.portfolio = portfolio;
+    }
+
+    public LocalDateTime getAnalysisDate() {
+        return analysisDate;
+    }
+
+    public void setAnalysisDate(LocalDateTime analysisDate) {
         this.analysisDate = analysisDate;
+    }
+
+    public Double getHighestStockPercentage() {
+        return highestStockPercentage;
+    }
+
+    public void setHighestStockPercentage(Double highestStockPercentage) {
         this.highestStockPercentage = highestStockPercentage;
-        this.isHighRisk = isHighRisk;
     }
 
-    @PrePersist
-    public void onCreate() {
-        this.analysisDate = LocalDateTime.now();
+    public Boolean getHighRisk() {
+        return isHighRisk;
     }
 
-    public Long getId() { return id; }
-    public UserPortfolio getPortfolio() { return portfolio; }
-    public LocalDateTime getAnalysisDate() { return analysisDate; }
-    public Boolean getIsHighRisk() { return isHighRisk; }
+    public void setHighRisk(Boolean highRisk) {
+        isHighRisk = highRisk;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
