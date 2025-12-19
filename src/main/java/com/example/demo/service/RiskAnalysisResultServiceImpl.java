@@ -23,4 +23,9 @@ public class RiskAnalysisResultServiceImpl
     public List<RiskAnalysisResult> getByPortfolio(Long portfolioId) {
         return repository.findByPortfolioId(portfolioId);
     }
+    @Override
+public List<RiskAnalysisResult> getAnalysesForPortfolio(Long portfolioId) {
+    return analysisRepository.findByPortfolioId(portfolioId);
+}
+
 }

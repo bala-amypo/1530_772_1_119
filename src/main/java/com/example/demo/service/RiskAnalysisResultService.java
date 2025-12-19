@@ -10,13 +10,4 @@ public interface RiskAnalysisResultService {
     RiskAnalysisResult getAnalysisById(Long id);
 
     List<RiskAnalysisResult> getAnalysesForPortfolio(Long portfolioId);
-
-}
-public interface RiskAnalysisResultService {
-
-    RiskAnalysisResult analyzePortfolio(Long portfolioId);
-
-    RiskAnalysisResult getAnalysisById(Long id);
-
-    List<RiskAnalysisResult> getAnalysesForPortfolio(Long portfolioId);
 }
