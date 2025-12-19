@@ -5,5 +5,5 @@ import com.example.demo.model.RiskThreshold;
 
 public interface RiskThresholdRepository extends JpaRepository<RiskThreshold, Long> {
 
-    RiskThreshold findByActiveTrue();  // ✅ REQUIRED
+    RiskThreshold findByActiveTrue(); 
 }
