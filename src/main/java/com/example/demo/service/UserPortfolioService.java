@@ -12,4 +12,6 @@ public interface UserPortfolioService {
     UserPortfolio getPortfolioById(Long id);
 
     List<UserPortfolio> getPortfoliosByUser(Long userId);
+
+    void deactivatePortfolio(Long id);   // ✅ REQUIRED
 }
