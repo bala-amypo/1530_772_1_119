@@ -14,5 +14,4 @@ public interface PortfolioHoldingService {
     List<PortfolioHolding> getHoldingsByPortfolio(Long portfolioId);
 
     void deleteHolding(Long id);
-
 }
