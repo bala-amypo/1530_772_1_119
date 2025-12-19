@@ -3,31 +3,56 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "risk_thresholds")
 public class RiskThreshold {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private UserPortfolio portfolio;
+    private String thresholdName;
 
     private Double maxSingleStockPercentage;
-    private Double maxOverallVolatility;
+
+    private Double maxSectorPercentage;
+
+    private boolean active;
 
     public RiskThreshold() {}
 
-    public RiskThreshold(UserPortfolio portfolio,
-                         Double maxSingleStockPercentage,
-                         Double maxOverallVolatility) {
-        this.portfolio = portfolio;
-        this.maxSingleStockPercentage = maxSingleStockPercentage;
-        this.maxOverallVolatility = maxOverallVolatility;
+    // ✅ GETTERS & SETTERS
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() { return id; }
-    public UserPortfolio getPortfolio() { return portfolio; }
-    public Double getMaxSingleStockPercentage() { return maxSingleStockPercentage; }
-    public Double getMaxOverallVolatility() { return maxOverallVolatility; }
+    public String getThresholdName() {
+        return thresholdName;
+    }
+
+    public void setThresholdName(String thresholdName) {
+        this.thresholdName = thresholdName;
+    }
+
+    public Double getMaxSingleStockPercentage() {
+        return maxSingleStockPercentage;
+    }
+
+    public void setMaxSingleStockPercentage(Double maxSingleStockPercentage) {
+        this.maxSingleStockPercentage = maxSingleStockPercentage;
+    }
+
+    public Double getMaxSectorPercentage() {
+        return maxSectorPercentage;
+    }
+
+    public void setMaxSectorPercentage(Double maxSectorPercentage) {
+        this.maxSectorPercentage = maxSectorPercentage;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
