@@ -37,8 +37,10 @@ public class UserPortfolioController {
     public List<UserPortfolio> getByUser(@PathVariable Long userId) {
         return portfolioService.getPortfoliosByUser(userId);
     }
-    @PutMapping("/{id}")
-    public UserPortfolio update(@PathVariable Long id,@RequestBody UserPortfolio portfolio) {
+   @PutMapping("/{id}")
+public UserPortfolio update(@PathVariable Long id,
+                            @RequestBody UserPortfolio portfolio) {
     return portfolioService.updatePortfolio(id, portfolio);
-    }
+}
+
 }
