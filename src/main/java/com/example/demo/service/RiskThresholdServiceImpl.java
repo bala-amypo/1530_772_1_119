@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.RiskThreshold;
@@ -8,28 +10,40 @@ import com.example.demo.repository.RiskThresholdRepository;
 @Service
 public class RiskThresholdServiceImpl implements RiskThresholdService {
 
-    private final RiskThresholdRepository repository;
+    private final RiskThresholdRepository thresholdRepository;
 
-    public RiskThresholdServiceImpl(RiskThresholdRepository repository) {
-        this.repository = repository;
+    public RiskThresholdServiceImpl(RiskThresholdRepository thresholdRepository) {
+        this.thresholdRepository = thresholdRepository;
     }
 
+    @Override
     public RiskThreshold createThreshold(RiskThreshold threshold) {
-
-        if (threshold.getMaxSingleStockPercentage() < 0 ||
-            threshold.getMaxSingleStockPercentage() > 100) {
-            throw new IllegalArgumentException("Invalid percentage");
-        }
-
-        return repository.save(threshold);
+        return thresholdRepository.save(threshold);
     }
 
+    @Override
+    public RiskThreshold updateThreshold(Long id, RiskThreshold threshold) {
+        RiskThreshold existing = thresholdRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+        existing.setMaxSingleStockPercentage(threshold.getMaxSingleStockPercentage());
+        existing.setMaxSectorPercentage(threshold.getMaxSectorPercentage());
+        existing.setActive(threshold.isActive());
+        return thresholdRepository.save(existing);
+    }
+
+    @Override
     public RiskThreshold getThresholdById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Threshold not found"));
+        return thresholdRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
     }
+
+    @Override
+    public RiskThreshold getActiveThreshold() {
+        return thresholdRepository.findByActiveTrue();
+    }
+
     @Override
     public List<RiskThreshold> getAllThresholds() {
-    return thresholdRepository.findAll();
+        return thresholdRepository.findAll();
     }
 }
