@@ -43,4 +43,11 @@ public class PortfolioHoldingServiceImpl implements PortfolioHoldingService {
     public List<PortfolioHolding> getHoldingsByPortfolio(Long portfolioId) {
         return repository.findByPortfolioId(portfolioId);
     }
+    @Override
+public void deleteHolding(Long id) {
+    PortfolioHolding holding = holdingRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Not found"));
+    holdingRepository.delete(holding);
+}
+
 }
