@@ -33,4 +33,12 @@ public class UserPortfolioServiceImpl implements UserPortfolioService {
     public List<UserPortfolio> getPortfoliosByUser(Long userId) {
         return repository.findByUserId(userId);
     }
+    @Override
+    public void deactivatePortfolio(Long id) {
+    UserPortfolio portfolio = portfolioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Not found"));
+    portfolio.setActive(false);
+    portfolioRepository.save(portfolio);
+}
+
 }
