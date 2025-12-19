@@ -1,31 +1,38 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.RiskAnalysisResult;
 import com.example.demo.repository.RiskAnalysisResultRepository;
 
 @Service
-public class RiskAnalysisResultServiceImpl
-        implements RiskAnalysisResultService {
+public class RiskAnalysisResultServiceImpl implements RiskAnalysisResultService {
 
-    private final RiskAnalysisResultRepository repository;
+    private final RiskAnalysisResultRepository analysisRepository;
 
-    public RiskAnalysisResultServiceImpl(RiskAnalysisResultRepository repository) {
-        this.repository = repository;
+    public RiskAnalysisResultServiceImpl(RiskAnalysisResultRepository analysisRepository) {
+        this.analysisRepository = analysisRepository;
     }
 
-    public RiskAnalysisResult save(RiskAnalysisResult result) {
-        return repository.save(result);
-    }
-
-    public List<RiskAnalysisResult> getByPortfolio(Long portfolioId) {
-        return repository.findByPortfolioId(portfolioId);
-    }
     @Override
-public List<RiskAnalysisResult> getAnalysesForPortfolio(Long portfolioId) {
-    return analysisRepository.findByPortfolioId(portfolioId);
-}
+    public RiskAnalysisResult analyzePortfolio(Long portfolioId) {
+        RiskAnalysisResult result = new RiskAnalysisResult();
+        result.setAnalysisDate(LocalDateTime.now());
+        result.setHighRisk(false);
+        return analysisRepository.save(result);
+    }
 
+    @Override
+    public RiskAnalysisResult getAnalysisById(Long id) {
+        return analysisRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+    }
+
+    @Override
+    public List<RiskAnalysisResult> getAnalysesForPortfolio(Long portfolioId) {
+        return analysisRepository.findByPortfolioId(portfolioId);
+    }
 }
