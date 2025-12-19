@@ -1,46 +1,72 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user_portfolios")
 public class UserPortfolio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
+    private Long userId;
 
     private String portfolioName;
+
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "portfolio")
-    private List<PortfolioHolding> holdings;
+    private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "portfolio")
-    private List<RiskAnalysisResult> analyses;
+    private boolean active;
 
     public UserPortfolio() {}
-
-    public UserPortfolio(User user, String portfolioName, LocalDateTime createdAt) {
-        this.user = user;
-        this.portfolioName = portfolioName;
-        this.createdAt = createdAt;
-    }
 
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
+        this.active = true;
     }
 
-    public Long getId() { return id; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-    public String getPortfolioName() { return portfolioName; }
-    public void setPortfolioName(String portfolioName) { this.portfolioName = portfolioName; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    // ✅ GETTERS & SETTERS
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getPortfolioName() {
+        return portfolioName;
+    }
+
+    public void setPortfolioName(String portfolioName) {
+        this.portfolioName = portfolioName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
