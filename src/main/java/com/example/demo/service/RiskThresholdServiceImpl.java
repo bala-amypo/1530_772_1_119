@@ -29,8 +29,7 @@ public class RiskThresholdServiceImpl implements RiskThresholdService {
                 .orElseThrow(() -> new RuntimeException("Threshold not found"));
     }
     @Override
-public List<RiskThreshold> getAllThresholds() {
+    public List<RiskThreshold> getAllThresholds() {
     return thresholdRepository.findAll();
-}
-
+    }
 }
