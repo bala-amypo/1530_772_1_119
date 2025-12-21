@@ -1,10 +1,9 @@
 package com.example.demo.repository;
 
-import java.util.List;
-
+import com.example.demo.model.RiskAnalysisResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.model.RiskAnalysisResult;
+import java.util.List;
 
 public interface RiskAnalysisResultRepository
         extends JpaRepository<RiskAnalysisResult, Long> {

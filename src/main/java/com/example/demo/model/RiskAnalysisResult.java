@@ -1,10 +1,10 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
-
 @Entity
+@Table(name = "risk_analysis_results")
 public class RiskAnalysisResult {
 
     @Id
@@ -12,6 +12,7 @@ public class RiskAnalysisResult {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "portfolio_id", nullable = false)
     private UserPortfolio portfolio;
 
     private LocalDateTime analysisDate;
@@ -20,12 +21,25 @@ public class RiskAnalysisResult {
 
     private Boolean isHighRisk;
 
-    private String notes;
+    public RiskAnalysisResult() {
+    }
 
-    public RiskAnalysisResult() {}
+    public RiskAnalysisResult(UserPortfolio portfolio,
+                              LocalDateTime analysisDate,
+                              Double highestStockPercentage,
+                              Boolean isHighRisk) {
+        this.portfolio = portfolio;
+        this.analysisDate = analysisDate;
+        this.highestStockPercentage = highestStockPercentage;
+        this.isHighRisk = isHighRisk;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public UserPortfolio getPortfolio() {
@@ -52,19 +66,11 @@ public class RiskAnalysisResult {
         this.highestStockPercentage = highestStockPercentage;
     }
 
-    public Boolean getHighRisk() {
+    public Boolean getIsHighRisk() {
         return isHighRisk;
     }
 
-    public void setHighRisk(Boolean highRisk) {
-        isHighRisk = highRisk;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setIsHighRisk(Boolean isHighRisk) {
+        this.isHighRisk = isHighRisk;
     }
 }
