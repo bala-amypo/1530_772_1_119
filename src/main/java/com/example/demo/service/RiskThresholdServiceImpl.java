@@ -1,49 +1,68 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.RiskThreshold;
+import com.example.demo.model.UserPortfolio;
 import com.example.demo.repository.RiskThresholdRepository;
+import com.example.demo.repository.UserPortfolioRepository;
+import com.example.demo.service.RiskThresholdService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RiskThresholdServiceImpl implements RiskThresholdService {
 
     private final RiskThresholdRepository thresholdRepository;
+    private final UserPortfolioRepository portfolioRepository;
 
-    public RiskThresholdServiceImpl(RiskThresholdRepository thresholdRepository) {
+    public RiskThresholdServiceImpl(RiskThresholdRepository thresholdRepository,
+                                    UserPortfolioRepository portfolioRepository) {
         this.thresholdRepository = thresholdRepository;
+        this.portfolioRepository = portfolioRepository;
     }
 
     @Override
-    public RiskThreshold createThreshold(RiskThreshold threshold) {
+    public RiskThreshold setThreshold(Long portfolioId, RiskThreshold threshold) {
+
+        // Role check (ADMIN only)
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream()
+                .noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            throw new IllegalArgumentException("Access denied");
+        }
+
+        if (threshold.getMaxSingleStockPercentage() < 0 ||
+                threshold.getMaxSingleStockPercentage() > 100) {
+            throw new IllegalArgumentException("Invalid max single stock percentage");
+        }
+
+        UserPortfolio portfolio = portfolioRepository.findById(portfolioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Portfolio not found"));
+
+        RiskThreshold existing = thresholdRepository
+                .findByPortfolioId(portfolioId)
+                .orElse(null);
+
+        if (existing != null) {
+            existing.setMaxSingleStockPercentage(
+                    threshold.getMaxSingleStockPercentage());
+            existing.setMaxOverallVolatility(
+                    threshold.getMaxOverallVolatility());
+            return thresholdRepository.save(existing);
+        }
+
+        threshold.setPortfolio(portfolio);
         return thresholdRepository.save(threshold);
     }
 
     @Override
-    public RiskThreshold updateThreshold(Long id, RiskThreshold threshold) {
-        RiskThreshold existing = thresholdRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found"));
-        existing.setMaxSingleStockPercentage(threshold.getMaxSingleStockPercentage());
-        existing.setMaxSectorPercentage(threshold.getMaxSectorPercentage());
-        existing.setActive(threshold.isActive());
-        return thresholdRepository.save(existing);
-    }
+    public RiskThreshold getThresholdForPortfolio(Long portfolioId) {
 
-    @Override
-    public RiskThreshold getThresholdById(Long id) {
-        return thresholdRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found"));
-    }
+        portfolioRepository.findById(portfolioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Portfolio not found"));
 
-    @Override
-    public RiskThreshold getActiveThreshold() {
-        return thresholdRepository.findByActiveTrue();
-    }
-
-    @Override
-    public List<RiskThreshold> getAllThresholds() {
-        return thresholdRepository.findAll();
+        return thresholdRepository.findByPortfolioId(portfolioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Risk threshold not found"));
     }
 }
