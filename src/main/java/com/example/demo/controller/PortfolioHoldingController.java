@@ -16,6 +16,7 @@ public class PortfolioHoldingController {
         this.holdingService = holdingService;
     }
 
+    // POST /api/holdings/{portfolioId}/{stockId}
     @PostMapping("/{portfolioId}/{stockId}")
     public PortfolioHolding addHolding(@PathVariable Long portfolioId,
                                        @PathVariable Long stockId,
@@ -23,6 +24,7 @@ public class PortfolioHoldingController {
         return holdingService.addHolding(portfolioId, stockId, holding);
     }
 
+    // GET /api/holdings/portfolio/{portfolioId}
     @GetMapping("/portfolio/{portfolioId}")
     public List<PortfolioHolding> getHoldings(@PathVariable Long portfolioId) {
         return holdingService.getHoldingsByPortfolio(portfolioId);

@@ -16,18 +16,21 @@ public class UserPortfolioController {
         this.portfolioService = portfolioService;
     }
 
+    // POST /api/portfolios
     @PostMapping
     public UserPortfolio createPortfolio(@RequestBody UserPortfolio portfolio) {
         return portfolioService.createPortfolio(portfolio);
     }
 
+    // GET /api/portfolios/{id}
     @GetMapping("/{id}")
-    public UserPortfolio getPortfolio(@PathVariable Long id) {
+    public UserPortfolio getPortfolioById(@PathVariable Long id) {
         return portfolioService.getPortfolioById(id);
     }
 
+    // GET /api/portfolios/user/{userId}
     @GetMapping("/user/{userId}")
-    public List<UserPortfolio> getUserPortfolios(@PathVariable Long userId) {
+    public List<UserPortfolio> getPortfoliosByUser(@PathVariable Long userId) {
         return portfolioService.getPortfoliosByUser(userId);
     }
 }
