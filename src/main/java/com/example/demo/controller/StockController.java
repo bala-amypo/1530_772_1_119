@@ -16,27 +16,32 @@ public class StockController {
         this.stockService = stockService;
     }
 
+    // POST /api/stocks
     @PostMapping
     public Stock createStock(@RequestBody Stock stock) {
         return stockService.createStock(stock);
     }
 
+    // PUT /api/stocks/{id}
     @PutMapping("/{id}")
     public Stock updateStock(@PathVariable Long id,
                              @RequestBody Stock stock) {
         return stockService.updateStock(id, stock);
     }
 
+    // GET /api/stocks/{id}
     @GetMapping("/{id}")
-    public Stock getStock(@PathVariable Long id) {
+    public Stock getStockById(@PathVariable Long id) {
         return stockService.getStockById(id);
     }
 
+    // GET /api/stocks
     @GetMapping
     public List<Stock> getAllStocks() {
         return stockService.getAllStocks();
     }
 
+    // PATCH /api/stocks/{id}/deactivate
     @PatchMapping("/{id}/deactivate")
     public void deactivateStock(@PathVariable Long id) {
         stockService.deactivateStock(id);
