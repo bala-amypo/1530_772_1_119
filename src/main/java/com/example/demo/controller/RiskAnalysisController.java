@@ -16,13 +16,11 @@ public class RiskAnalysisController {
         this.riskAnalysisService = riskAnalysisService;
     }
 
-    // POST /api/risk-analysis/{portfolioId}
     @PostMapping("/{portfolioId}")
     public RiskAnalysisResult analyzePortfolio(@PathVariable Long portfolioId) {
         return riskAnalysisService.analyzePortfolio(portfolioId);
     }
 
-    // GET /api/risk-analysis/{portfolioId}
     @GetMapping("/{portfolioId}")
     public List<RiskAnalysisResult> getAnalyses(@PathVariable Long portfolioId) {
         return riskAnalysisService.getAnalysesForPortfolio(portfolioId);
