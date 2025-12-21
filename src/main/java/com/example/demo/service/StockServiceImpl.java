@@ -1,49 +1,66 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.stereotype.Service;
-
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Stock;
 import com.example.demo.repository.StockRepository;
+import com.example.demo.service.StockService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StockServiceImpl implements StockService {
 
-    private final StockRepository repository;
+    private final StockRepository stockRepository;
 
-    public StockServiceImpl(StockRepository repository) {
-        this.repository = repository;
+    public StockServiceImpl(StockRepository stockRepository) {
+        this.stockRepository = stockRepository;
     }
 
+    @Override
     public Stock createStock(Stock stock) {
 
-        if (repository.findByTicker(stock.getTicker()).isPresent()) {
-            throw new IllegalArgumentException("Duplicate ticker");
+        if (stockRepository.findByTicker(stock.getTicker()).isPresent()) {
+            throw new IllegalArgumentException("Ticker already exists");
         }
 
-        stock.setIsActive(true);
-        return repository.save(stock);
+        if (stock.getIsActive() == null) {
+            stock.setIsActive(true);
+        }
+
+        return stockRepository.save(stock);
     }
 
+    @Override
     public Stock updateStock(Long id, Stock stock) {
-        Stock existing = getStockById(id);
+
+        Stock existing = stockRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Stock not found"));
+
         existing.setCompanyName(stock.getCompanyName());
         existing.setSector(stock.getSector());
-        return repository.save(existing);
+        existing.setIsActive(stock.getIsActive());
+
+        return stockRepository.save(existing);
     }
 
+    @Override
     public Stock getStockById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Stock not found"));
+        return stockRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Stock not found"));
     }
 
+    @Override
     public List<Stock> getAllStocks() {
-        return repository.findAll();
+        return stockRepository.findAll();
     }
 
+    @Override
     public void deactivateStock(Long id) {
-        Stock stock = getStockById(id);
+        Stock stock = stockRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Stock not found"));
+
         stock.setIsActive(false);
-        repository.save(stock);
+        stockRepository.save(stock);
     }
 }
