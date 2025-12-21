@@ -3,32 +3,46 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "risk_thresholds")
 public class RiskThreshold {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String thresholdName;
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id", nullable = false)
+    private UserPortfolio portfolio;
 
     private Double maxSingleStockPercentage;
 
-    private Double maxSectorPercentage;
+    private Double maxOverallVolatility;
 
-    private boolean active;
+    public RiskThreshold() {
+    }
 
-    public RiskThreshold() {}
+    public RiskThreshold(UserPortfolio portfolio,
+                         Double maxSingleStockPercentage,
+                         Double maxOverallVolatility) {
+        this.portfolio = portfolio;
+        this.maxSingleStockPercentage = maxSingleStockPercentage;
+        this.maxOverallVolatility = maxOverallVolatility;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public String getThresholdName() {
-        return thresholdName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setThresholdName(String thresholdName) {
-        this.thresholdName = thresholdName;
+    public UserPortfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(UserPortfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     public Double getMaxSingleStockPercentage() {
@@ -39,19 +53,11 @@ public class RiskThreshold {
         this.maxSingleStockPercentage = maxSingleStockPercentage;
     }
 
-    public Double getMaxSectorPercentage() {
-        return maxSectorPercentage;
+    public Double getMaxOverallVolatility() {
+        return maxOverallVolatility;
     }
 
-    public void setMaxSectorPercentage(Double maxSectorPercentage) {
-        this.maxSectorPercentage = maxSectorPercentage;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setMaxOverallVolatility(Double maxOverallVolatility) {
+        this.maxOverallVolatility = maxOverallVolatility;
     }
 }
