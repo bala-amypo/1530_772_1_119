@@ -1,11 +1,10 @@
 package com.example.demo.repository;
 
-import java.util.Optional;
-import java.util.List;
-
+import com.example.demo.model.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.model.Stock;
+import java.util.List;
+import java.util.Optional;
 
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
