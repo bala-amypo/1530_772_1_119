@@ -14,14 +14,12 @@ public class RiskThresholdController {
         this.thresholdService = thresholdService;
     }
 
-    // POST /api/risk-thresholds/{portfolioId}
     @PostMapping("/{portfolioId}")
     public RiskThreshold setThreshold(@PathVariable Long portfolioId,
                                       @RequestBody RiskThreshold threshold) {
         return thresholdService.setThreshold(portfolioId, threshold);
     }
 
-    // GET /api/risk-thresholds/{portfolioId}
     @GetMapping("/{portfolioId}")
     public RiskThreshold getThreshold(@PathVariable Long portfolioId) {
         return thresholdService.getThresholdForPortfolio(portfolioId);
