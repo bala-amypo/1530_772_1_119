@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.model.Stock;
 import com.example.demo.service.StockService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/stocks")
@@ -18,27 +17,28 @@ public class StockController {
     }
 
     @PostMapping
-    public Stock create(@RequestBody Stock stock) {
+    public Stock createStock(@RequestBody Stock stock) {
         return stockService.createStock(stock);
     }
 
     @PutMapping("/{id}")
-    public Stock update(@PathVariable Long id, @RequestBody Stock stock) {
+    public Stock updateStock(@PathVariable Long id,
+                             @RequestBody Stock stock) {
         return stockService.updateStock(id, stock);
     }
 
     @GetMapping("/{id}")
-    public Stock get(@PathVariable Long id) {
+    public Stock getStock(@PathVariable Long id) {
         return stockService.getStockById(id);
     }
 
     @GetMapping
-    public List<Stock> getAll() {
+    public List<Stock> getAllStocks() {
         return stockService.getAllStocks();
     }
 
-    @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+    @PatchMapping("/{id}/deactivate")
+    public void deactivateStock(@PathVariable Long id) {
         stockService.deactivateStock(id);
     }
 }
