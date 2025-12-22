@@ -23,6 +23,7 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<UserPortfolio> portfolios;
 
     public User() {
