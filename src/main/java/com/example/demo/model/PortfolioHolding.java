@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -13,10 +15,12 @@ public class PortfolioHolding {
 
     @ManyToOne
     @JoinColumn(name = "portfolio_id", nullable = false)
+    @JsonIgnore
     private UserPortfolio portfolio;
 
     @ManyToOne
     @JoinColumn(name = "stock_id", nullable = false)
+    @JsonIgnore
     private Stock stock;
 
     private Double quantity;
@@ -36,42 +40,44 @@ public class PortfolioHolding {
         this.marketValue = marketValue;
     }
 
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public UserPortfolio getPortfolio() {
         return portfolio;
     }
 
-    public void setPortfolio(UserPortfolio portfolio) {
-        this.portfolio = portfolio;
-    }
-
     public Stock getStock() {
         return stock;
-    }
-    
-    public void setStock(Stock stock) {
-        this.stock = stock;
     }
 
     public Double getQuantity() {
         return quantity;
     }
-    
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public BigDecimal getMarketValue() {
         return marketValue;
     }
-    
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPortfolio(UserPortfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
     public void setMarketValue(BigDecimal marketValue) {
         this.marketValue = marketValue;
     }
