@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.RiskThreshold;
 import com.example.demo.service.RiskThresholdService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,13 +16,15 @@ public class RiskThresholdController {
     }
 
     @PostMapping("/{portfolioId}")
-    public RiskThreshold setThreshold(@PathVariable Long portfolioId,
-                                      @RequestBody RiskThreshold threshold) {
-        return thresholdService.setThreshold(portfolioId, threshold);
+    public ResponseEntity<RiskThreshold> setThreshold(
+            @PathVariable Long portfolioId,
+            @RequestBody RiskThreshold threshold) {
+
+        return ResponseEntity.ok(thresholdService.setThreshold(portfolioId, threshold));
     }
 
     @GetMapping("/{portfolioId}")
-    public RiskThreshold getThreshold(@PathVariable Long portfolioId) {
-        return thresholdService.getThresholdForPortfolio(portfolioId);
+    public ResponseEntity<RiskThreshold> getThreshold(@PathVariable Long portfolioId) {
+        return ResponseEntity.ok(thresholdService.getThresholdForPortfolio(portfolioId));
     }
 }

@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.dto.LoginRequest;
 import com.example.demo.model.User;
+import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,18 +12,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
 
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        User savedUser = userService.registerUser(user);
-        return ResponseEntity.ok(savedUser);
+    public AuthController(UserService userService, JwtUtil jwtUtil) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user) {
-        User existingUser = userService.findByEmail(user.getEmail());
-        return ResponseEntity.ok(existingUser);
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+
+        User user = userService.findByEmail(request.getEmail());
+
+        String token = jwtUtil.generateToken(
+                user.getEmail(),
+                user.getRole(),
+                user.getId()
+        );
+
+        AuthResponse response = new AuthResponse(
+                token,
+                user.getId(),
+                user.getEmail(),
+                user.getRole()
+        );
+
+        return ResponseEntity.ok(response);
     }
 }

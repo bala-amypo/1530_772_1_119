@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.PortfolioHolding;
 import com.example.demo.service.PortfolioHoldingService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +18,18 @@ public class PortfolioHoldingController {
     }
 
     @PostMapping("/{portfolioId}/{stockId}")
-    public PortfolioHolding addHolding(@PathVariable Long portfolioId,
-                                       @PathVariable Long stockId,
-                                       @RequestBody PortfolioHolding holding) {
-        return holdingService.addHolding(portfolioId, stockId, holding);
+    public ResponseEntity<PortfolioHolding> addHolding(
+            @PathVariable Long portfolioId,
+            @PathVariable Long stockId,
+            @RequestBody PortfolioHolding holding) {
+
+        return ResponseEntity.ok(
+                holdingService.addHolding(portfolioId, stockId, holding)
+        );
     }
 
     @GetMapping("/portfolio/{portfolioId}")
-    public List<PortfolioHolding> getHoldings(@PathVariable Long portfolioId) {
-        return holdingService.getHoldingsByPortfolio(portfolioId);
+    public ResponseEntity<List<PortfolioHolding>> getHoldings(@PathVariable Long portfolioId) {
+        return ResponseEntity.ok(holdingService.getHoldingsByPortfolio(portfolioId));
     }
 }
