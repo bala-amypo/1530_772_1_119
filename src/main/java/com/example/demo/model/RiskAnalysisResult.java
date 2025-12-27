@@ -1,33 +1,74 @@
 package com.example.demo.model;
 
-import java.sql.Timestamp;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
+import java.time.LocalDateTime;
+
+@Entity   // 🔥 THIS IS THE FIX
 public class RiskAnalysisResult {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
     private UserPortfolio portfolio;
-    private Timestamp analysisDate;
+
     private Double highestStockPercentage;
-    private Boolean highRisk;
+    private Double highestSectorPercentage;
+    private Boolean isHighRisk;
+    private LocalDateTime analysisDate;
 
-    public RiskAnalysisResult() {}
-
-    public RiskAnalysisResult(UserPortfolio portfolio, Timestamp analysisDate,
-                              Double highestStockPercentage, Boolean highRisk) {
-        this.portfolio = portfolio;
-        this.analysisDate = analysisDate;
-        this.highestStockPercentage = highestStockPercentage;
-        this.highRisk = highRisk;
+    public RiskAnalysisResult() {
     }
 
-    public Timestamp getAnalysisDate() { return analysisDate; }
-    public void setAnalysisDate(Timestamp analysisDate) { this.analysisDate = analysisDate; }
+    public Long getId() {
+        return id;
+    }
 
-    public Double getHighestStockPercentage() { return highestStockPercentage; }
+    public UserPortfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(UserPortfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public Double getHighestStockPercentage() {
+        return highestStockPercentage;
+    }
+
     public void setHighestStockPercentage(Double highestStockPercentage) {
         this.highestStockPercentage = highestStockPercentage;
     }
 
-    public Boolean isHighRisk() { return highRisk; }
-    public void setHighRisk(Boolean highRisk) { this.highRisk = highRisk; }
+    public Double getHighestSectorPercentage() {
+        return highestSectorPercentage;
+    }
+
+    public void setHighestSectorPercentage(Double highestSectorPercentage) {
+        this.highestSectorPercentage = highestSectorPercentage;
+    }
+
+    public Boolean getIsHighRisk() {
+        return isHighRisk;
+    }
+
+    public void setIsHighRisk(Boolean isHighRisk) {
+        this.isHighRisk = isHighRisk;
+    }
+
+    public LocalDateTime getAnalysisDate() {
+        return analysisDate;
+    }
+
+    public void setAnalysisDate(LocalDateTime analysisDate) {
+        this.analysisDate = analysisDate;
+    }
 }
