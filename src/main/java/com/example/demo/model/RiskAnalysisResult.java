@@ -1,15 +1,9 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity   // 🔥 THIS IS THE FIX
+@Entity
 public class RiskAnalysisResult {
 
     @Id
@@ -22,11 +16,13 @@ public class RiskAnalysisResult {
 
     private Double highestStockPercentage;
     private Double highestSectorPercentage;
-    private Boolean isHighRisk;
+
+    // 🔥 BOOLEAN NAME
+    private boolean highRisk;
+
     private LocalDateTime analysisDate;
 
-    public RiskAnalysisResult() {
-    }
+    public RiskAnalysisResult() {}
 
     public Long getId() {
         return id;
@@ -56,12 +52,14 @@ public class RiskAnalysisResult {
         this.highestSectorPercentage = highestSectorPercentage;
     }
 
-    public Boolean getIsHighRisk() {
-        return isHighRisk;
+    // ✅ REQUIRED BY TEST
+    public boolean isHighRisk() {
+        return highRisk;
     }
 
-    public void setIsHighRisk(Boolean isHighRisk) {
-        this.isHighRisk = isHighRisk;
+    // ✅ REQUIRED BY TEST
+    public void setHighRisk(boolean highRisk) {
+        this.highRisk = highRisk;
     }
 
     public LocalDateTime getAnalysisDate() {
