@@ -1,72 +1,33 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
-@Entity
 public class RiskAnalysisResult {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "portfolio_id")
     private UserPortfolio portfolio;
-
+    private Timestamp analysisDate;
     private Double highestStockPercentage;
-    private Double highestSectorPercentage;
-
-    // 🔥 BOOLEAN NAME
-    private boolean highRisk;
-
-    private LocalDateTime analysisDate;
+    private Boolean highRisk;
 
     public RiskAnalysisResult() {}
 
-    public Long getId() {
-        return id;
-    }
-
-    public UserPortfolio getPortfolio() {
-        return portfolio;
-    }
-
-    public void setPortfolio(UserPortfolio portfolio) {
+    public RiskAnalysisResult(UserPortfolio portfolio, Timestamp analysisDate,
+                              Double highestStockPercentage, Boolean highRisk) {
         this.portfolio = portfolio;
+        this.analysisDate = analysisDate;
+        this.highestStockPercentage = highestStockPercentage;
+        this.highRisk = highRisk;
     }
 
-    public Double getHighestStockPercentage() {
-        return highestStockPercentage;
-    }
+    public Timestamp getAnalysisDate() { return analysisDate; }
+    public void setAnalysisDate(Timestamp analysisDate) { this.analysisDate = analysisDate; }
 
+    public Double getHighestStockPercentage() { return highestStockPercentage; }
     public void setHighestStockPercentage(Double highestStockPercentage) {
         this.highestStockPercentage = highestStockPercentage;
     }
 
-    public Double getHighestSectorPercentage() {
-        return highestSectorPercentage;
-    }
-
-    public void setHighestSectorPercentage(Double highestSectorPercentage) {
-        this.highestSectorPercentage = highestSectorPercentage;
-    }
-
-    // ✅ REQUIRED BY TEST
-    public boolean isHighRisk() {
-        return highRisk;
-    }
-
-    // ✅ REQUIRED BY TEST
-    public void setHighRisk(boolean highRisk) {
-        this.highRisk = highRisk;
-    }
-
-    public LocalDateTime getAnalysisDate() {
-        return analysisDate;
-    }
-
-    public void setAnalysisDate(LocalDateTime analysisDate) {
-        this.analysisDate = analysisDate;
-    }
+    public Boolean isHighRisk() { return highRisk; }
+    public void setHighRisk(Boolean highRisk) { this.highRisk = highRisk; }
 }

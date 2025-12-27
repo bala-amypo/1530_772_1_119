@@ -1,61 +1,35 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-
-@Entity   // 🔥 THIS IS CRITICAL
 public class Stock {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(unique = true)
     private String ticker;
-
     private String companyName;
     private String sector;
-    private Boolean active = true;
+    private Boolean isActive = true;
 
-    public Stock() {
-    }
+    public Stock() {}
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-
-    public void setTicker(String ticker) {
+    public Stock(String ticker, String companyName, String sector, Boolean isActive) {
         this.ticker = ticker;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
         this.companyName = companyName;
-    }
-
-    public String getSector() {
-        return sector;
-    }
-
-    public void setSector(String sector) {
         this.sector = sector;
+        this.isActive = isActive;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
+    // getters & setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public String getTicker() { return ticker; }
+    public void setTicker(String ticker) { this.ticker = ticker; }
+
+    public String getCompanyName() { return companyName; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+
+    public String getSector() { return sector; }
+    public void setSector(String sector) { this.sector = sector; }
+
+    public Boolean getIsActive() { return isActive; }
+    public void setIsActive(Boolean active) { isActive = active; }
 }

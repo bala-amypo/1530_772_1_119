@@ -1,39 +1,22 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.sql.Timestamp;
 
-@Entity
-@Table(name = "users")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String email;
     private String password;
     private String role;
-
     private LocalDateTime createdAt;
 
     public User() {}
 
-    // Existing constructor
     public User(String email, String password, String role, LocalDateTime createdAt) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.createdAt = createdAt;
-    }
-
-    // ✅ ADD THIS CONSTRUCTOR (IMPORTANT)
-    public User(String email, String password, String role, Timestamp createdAt) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.createdAt = createdAt.toLocalDateTime();
     }
 
     // getters & setters
