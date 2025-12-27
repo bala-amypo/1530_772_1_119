@@ -1,24 +1,22 @@
 package com.example.demo.security;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+@Component   // 🔥 THIS IS THE FIX
 public class JwtUtil {
 
-    public String generateToken(String email, String role, Long userId) {
-        return "dummy.jwt.token";
-    }
+    private static final String SECRET_KEY = "secretkey123";
 
-    public boolean validateToken(String token) {
-        return true;
-    }
-
-    public String extractEmail(String token) {
-        return "abc@mail.com";
-    }
-
-    public String extractRole(String token) {
-        return "ADMIN";
-    }
-
-    public Long extractUserId(String token) {
-        return 1L;
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
     }
 }
