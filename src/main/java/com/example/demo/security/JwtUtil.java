@@ -10,11 +10,9 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    // 🔐 SECRET KEY (must be at least 256 bits for HS256)
     private static final String SECRET_KEY =
             "mySuperSecretKeyForJwtSigning1234567890";
 
-    // ⏳ TOKEN VALIDITY (1 day)
     private static final long EXPIRATION_TIME = 24 * 60 * 60 * 1000;
 
     private final Key key;
@@ -22,8 +20,6 @@ public class JwtUtil {
     public JwtUtil() {
         this.key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
-
-    /* ===================== TOKEN GENERATION ===================== */
 
     public String generateToken(String email, String role, Long userId) {
 
@@ -39,8 +35,6 @@ public class JwtUtil {
                 .compact();
     }
 
-    /* ===================== TOKEN VALIDATION ===================== */
-
     public boolean validateToken(String token) {
         try {
             parseClaims(token);
@@ -49,8 +43,6 @@ public class JwtUtil {
             return false;
         }
     }
-
-    /* ===================== EXTRACT DATA ===================== */
 
     public String extractEmail(String token) {
         return parseClaims(token).getSubject();
@@ -63,8 +55,6 @@ public class JwtUtil {
     public Long extractUserId(String token) {
         return parseClaims(token).get("userId", Long.class);
     }
-
-    /* ===================== INTERNAL ===================== */
 
     private Claims parseClaims(String token) {
         return Jwts.parserBuilder()
