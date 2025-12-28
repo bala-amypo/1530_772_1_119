@@ -1,33 +1,80 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "risk_analysis_results")
 public class RiskAnalysisResult {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private UserPortfolio portfolio;
+
+    @Column(name = "portfolio_id")
+    private Long portfolioId;
+
     private Timestamp analysisDate;
+
     private Double highestStockPercentage;
-    private Boolean highRisk;
 
-    public RiskAnalysisResult() {}
+    private Double highestSectorPercentage;
 
-    public RiskAnalysisResult(UserPortfolio portfolio, Timestamp analysisDate,
-                              Double highestStockPercentage, Boolean highRisk) {
-        this.portfolio = portfolio;
-        this.analysisDate = analysisDate;
-        this.highestStockPercentage = highestStockPercentage;
-        this.highRisk = highRisk;
+    private boolean highRisk;
+
+    private String notes;
+
+    /* ===== GETTERS & SETTERS ===== */
+
+    public Long getId() {
+        return id;
     }
 
-    public Timestamp getAnalysisDate() { return analysisDate; }
-    public void setAnalysisDate(Timestamp analysisDate) { this.analysisDate = analysisDate; }
+    public Long getPortfolioId() {
+        return portfolioId;
+    }
 
-    public Double getHighestStockPercentage() { return highestStockPercentage; }
+    public void setPortfolioId(Long portfolioId) {
+        this.portfolioId = portfolioId;
+    }
+
+    public Timestamp getAnalysisDate() {
+        return analysisDate;
+    }
+
+    public void setAnalysisDate(Timestamp analysisDate) {
+        this.analysisDate = analysisDate;
+    }
+
+    public Double getHighestStockPercentage() {
+        return highestStockPercentage;
+    }
+
     public void setHighestStockPercentage(Double highestStockPercentage) {
         this.highestStockPercentage = highestStockPercentage;
     }
 
-    public Boolean isHighRisk() { return highRisk; }
-    public void setHighRisk(Boolean highRisk) { this.highRisk = highRisk; }
+    public Double getHighestSectorPercentage() {
+        return highestSectorPercentage;
+    }
+
+    public void setHighestSectorPercentage(Double highestSectorPercentage) {
+        this.highestSectorPercentage = highestSectorPercentage;
+    }
+
+    public boolean isHighRisk() {
+        return highRisk;
+    }
+
+    public void setHighRisk(boolean highRisk) {
+        this.highRisk = highRisk;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
