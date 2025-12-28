@@ -25,7 +25,7 @@ public class OpenApiConfig {
 
         return new OpenAPI()
                 .servers(List.of(
-                        new Server().url("https://9027.32procr.amypo.ai")
+                        new Server().url("https://9054.pro604cr.amypo.ai/")
                 ))
                 .components(new Components()
                         .addSecuritySchemes("BearerAuth", jwtScheme))
