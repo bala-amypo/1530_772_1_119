@@ -16,7 +16,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Stock createStock(Stock stock) {
-        return stockRepository.save(stock); // ✅
+        return stockRepository.save(stock);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class StockServiceImpl implements StockService {
         existing.setSector(stock.getSector());
         existing.setActive(stock.getActive());
 
-        return stockRepository.save(existing); // ✅
+        return stockRepository.save(existing); 
     }
 
     @Override
@@ -49,6 +49,6 @@ public class StockServiceImpl implements StockService {
                 .orElseThrow(() -> new RuntimeException("Stock not found"));
 
         stock.setActive(false);
-        stockRepository.save(stock); // ✅
+        stockRepository.save(stock);
     }
 }

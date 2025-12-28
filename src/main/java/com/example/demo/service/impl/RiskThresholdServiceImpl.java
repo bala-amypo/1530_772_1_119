@@ -17,7 +17,6 @@ public class RiskThresholdServiceImpl implements RiskThresholdService {
     @Override
     public RiskThreshold createThreshold(RiskThreshold threshold) {
 
-        // 🔴 Ensure only ONE active threshold
         if (Boolean.TRUE.equals(threshold.getActive())) {
             List<RiskThreshold> all = thresholdRepository.findAll();
             for (RiskThreshold t : all) {
@@ -39,7 +38,6 @@ public class RiskThresholdServiceImpl implements RiskThresholdService {
         existing.setMaxSingleStockPercentage(threshold.getMaxSingleStockPercentage());
         existing.setMaxSectorPercentage(threshold.getMaxSectorPercentage());
 
-        // 🔴 Ensure only ONE active threshold
         if (Boolean.TRUE.equals(threshold.getActive())) {
             List<RiskThreshold> all = thresholdRepository.findAll();
             for (RiskThreshold t : all) {

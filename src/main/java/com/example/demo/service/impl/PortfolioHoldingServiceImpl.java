@@ -27,17 +27,14 @@ public class PortfolioHoldingServiceImpl implements PortfolioHoldingService {
     @Override
     public PortfolioHolding createHolding(PortfolioHolding holding) {
 
-        // 🔴 FETCH FULL PORTFOLIO
         UserPortfolio portfolio = portfolioRepository.findById(
                 holding.getPortfolio().getId()
         ).orElseThrow(() -> new RuntimeException("Portfolio not found"));
 
-        // 🔴 FETCH FULL STOCK
         Stock stock = stockRepository.findById(
                 holding.getStock().getId()
         ).orElseThrow(() -> new RuntimeException("Stock not found"));
 
-        // ✅ SET FULL OBJECTS
         holding.setPortfolio(portfolio);
         holding.setStock(stock);
 
